@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<script src="{% static "js/new.js" %}"></script>
+{% endblock %}
+
+{% block section %}
+	<span id="">Новое</span>
+{% endblock %}
+
+{% block latest_posts %}
+
+<div class="new">
+	<div class="new-posts">
+		<div class="new-section">
+			<span>
+				Новые публикации <span class="glyphicon glyphicon-arrow-down"></span>
+				</span>
+		</div>
+		{% for new_post in new_posts %}
+			<div class="new-posts-inner">
+				<div class="new-posts-img" style="background-image: url({{ new_post.image.url }});"></div>
+				<div class="new-posts-about">
+					<div class="new-posts-about-title">
+						<a href="{% url 'post' slug=new_post.slug %}">{{ new_post.title }}</a>
+					</div>
+					<div class="new-posts-about-desc">
+						{{ new_post.description|truncatewords:30 }}
+					</div>
+				</div>
+			</div>
+			<div class="new-rasporka"></div>
+		{% endfor %}
+	</div>
+
+	<hr>
+
+	<div class="row new-facts-events">
+		<div class="new-events col-lg-6 col-md-6">
+			<div class="new-section">
+				<span>Новые события</span>
+			</div>
+			{% for new_event in new_events %}
+				<div class="new-events-inner">
+					<div class="new-events-img" style="background-image: url({{ new_event.image.url }});"></div>
+					<div class="new-events-title">
+						<a href="{% url 'event' slug=new_event.slug %}">
+							<p>{{ new_event.title }}</p>
+						</a>
+						<span>{{ new_event.ev_date }}</span>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="new-facts col-lg-6 col-md-6">
+			<div class="new-section">
+				<span>Новые факты</span>
+			</div>
+			{% for new_fact in new_facts %}
+				<div class="new-facts-inner">
+					<div class="new-facts-img" style="background-image: url({{ new_fact.image.url }});"></div>
+					<div class="new-facts-title">
+						<a href="{% url 'fact' slug=new_fact.slug %}">{{ new_fact.title }}</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

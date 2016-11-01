@@ -1,0 +1,27 @@
+.event {
+	padding: 50px 30px;
+	width: 100%;
+}
+
+.event-title {
+	width: 100%;
+	font-size: 25px;
+}
+
+.event-info {
+	width: 100%;
+}
+
+.event-info-date-place {
+	float: left;
+	width: 50%;
+}
+
+.event-img {
+	float: left;
+	width: 50%;
+}
+
+.event-content {
+	width: 100%;
+}

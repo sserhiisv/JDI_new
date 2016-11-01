@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/event.css" %}" />
+{% endblock %}
+
+{% block events %}
+	<div class="event">
+		<div class="event-title">
+			<p>{{ event.title }}</p>
+		</div>
+		<div class="event-info">
+			<div class="event-info-date-place">
+				<p>Дата: {{ event.ev_date }}</p>
+				<p>Место: {{ event.ev_place }}</p>
+			</div>
+			<div class="event-img">
+				<img width="300" src="{{ event.image.url }}">
+			</div>
+		</div>
+		<div class="event-content">
+			<p>{{ event.content }}</p>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/post.css" %}" />
+	<script src="{% static "js/post.js" %}"></script>
+{% endblock %}
+
+
+{% block section %}
+	<span id="">{{ post.category }}</span>
+{% endblock %}
+
+{% block post %}
+
+<div class="post">
+	<div class="post-info">
+		{{ post.date }} | {{ post.author }}
+	</div>
+	<div class="post-title">
+		{{ post.title }}
+	</div>
+	<div class="post-description">
+		{{ post.description|safe }}
+	</div>
+	<div class="post-img">
+		<img src="{{ post.image.url }}">
+	</div>
+	<div class="post-content">
+		{{ post.content|safe }}
+	</div>
+	<div class="post-tags">
+		<span>Теги:</span>
+		{% for tag in post.tag.all %}
+			<a href="{% url 'tag' slug=tag.slug %}">
+				<span class="label label-primary">{{ tag }}</span>
+			</a>
+		{% endfor %}
+	</div>
+</div>
+
+{% if similar %}
+	<div class="post-similar-set">
+		<div class="post-similar-read">
+			<span>Читайте также</span>
+		</div>
+		{% for post in similar %}
+			<div class="post-similar-block">
+				<div class="post-similar-img">
+					<img width="200" src="{{ post.image.url }}">
+				</div>
+				<div class="post">
+					{{ post.title }}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}
+
+
+{% endblock %}

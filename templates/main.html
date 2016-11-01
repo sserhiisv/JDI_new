@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/slider.css" %}">
+    <script src="{% static "js/slider.js" %}"></script>
+{% endblock %}
+
+{% block home %}
+
+<div class="row">
+    <div class="left col-lg-5 col-md-5 ls-hidden">
+        <div class="left-panel">
+
+            <div class="Wrap">
+               <div class="slideWrp">
+               		{% for rand_post in rand_posts %}
+	                    <div class="thumbnail slide-block">
+	                        <img src="{{ rand_post.image.url }}" alt="...">
+	                        <div class="caption">
+	                            <a href="{% url 'post' slug=rand_post.slug %}">
+	                            	<h3>{{ rand_post.title }}</h3>
+	                            </a>
+	                            <p>{{ rand_post.description|truncatewords:20 }}</p>
+	                        </div>
+	                    </div>
+                    {% endfor %}
+                </div>
+                <div class="indexActivate">
+                    <ul id="points">
+                        <li num="1"></li>
+                        <li num="2"></li>
+                        <li num="3"></li>
+                        <li num="4"></li>
+                        <li num="5"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="events">
+                <div class="section-title">
+                	<a href="{% url 'events' %}">
+                    	<h4>События</h4>
+                    </a>
+                </div>
+                <ul class="nav nav-pills nav-stacked blue">
+                	{% for event in events %}
+	                    <li>
+	                        <div class="media">
+	                            <div class="media-left events-img">
+	                                <a href="">
+	                                    <img class="media-object" width="150px" src="{{ event.image.url }}" alt="...">
+	                                </a>
+	                            </div>
+	                            <div class="media-body">
+	                                <h4 class="media-heading">
+	                                    <a href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+	                                </h4>
+	                            </div>
+	                        </div>
+	                    </li>
+	                {% endfor %}
+                </ul>
+            </div>
+
+            <br>
+
+            <div class="events">
+                <div class="section-title">
+                    <a href="{% url 'facts' %}">
+                    	<h4>Интересные факты</h4>
+                    </a>
+                </div>
+                <ul class="nav nav-pills nav-stacked blue">
+                	{% for fact in facts %}
+	                    <li>
+	                        <div class="media">
+	                            <div class="media-left events-img">
+	                                <a href="">
+	                                    <img class="media-object" width="150px" src="{{ fact.image.url }}" alt="...">
+	                                </a>
+	                            </div>
+	                            <div class="media-body">
+	                                <h4 class="media-heading">
+	                                    <a  href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+	                                </h4>
+	                            </div>
+	                        </div>
+	                    </li>
+	                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main col-lg-7 col-md-7 col-ls-12">
+        <div class="container-fluid main">
+
+        	{% for post in last_posts %}
+	            <div class="main-post-inner">
+	                <div class="main-post-inner-desc" style="background-image: url({{ post.image.url }});">
+	                    <div class="main-post-title">
+
+	                        <div class="main-post-title-desc">
+	                            <span class="glyphicon glyphicon-bookmark"></span>
+	                            <a href="">
+	                            {{ post.category }}
+	                            </a>
+	                            <span class="glyphicon glyphicon-pencil"></span>
+	                            <span>{{ post.date }}</span>
+	                            <span class="label label-success">
+	                                <span class="glyphicon glyphicon-eye-open"></span> {{ post.views }}
+	                            </span>
+	                        </div>
+
+	                        <div class="main-post-title-t">
+	                            <a href="{% url 'post' slug=post.slug %}">
+	                            	<span class="main-title">{{ post.title }}</span>
+	                            </a>
+	                        </div>
+
+	                    </div>
+	                </div>
+	            </div>
+
+            	<div class="underliner"></div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<span id="">Интересные факты</span>
+{% endblock %}
+
+{% block facts %}
+	<div>
+		{% for fact in facts %}
+			<p>
+				<a href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+			</p>
+			<p>{{ fact.date }}</p>
+		{% endfor %}
+	</div>
+{% endblock %}

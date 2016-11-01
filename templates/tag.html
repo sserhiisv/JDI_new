@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/category-posts.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<script src="{% static "js/new.js" %}"></script>
+{% endblock %}
+
+{% block section %}
+	<span id="">{{ tag }}</span>
+{% endblock %}
+
+
+{% block tag %}
+
+<div class="tag" style="padding: 30px;">
+	{% for post in posts %}
+		<div class="new-posts-inner">
+			<div class="new-posts-img" style="background-image: url({{ post.image.url }});"></div>
+			<div class="new-posts-about">
+				<div class="new-posts-about-title">
+					<a href="{% url 'post' slug=post.slug %}">{{ post.title }}</a>
+				</div>
+				<div class="new-posts-about-desc">
+					{{ post.description|truncatewords:30 }}
+				</div>
+			</div>
+		</div>
+		<div class="new-rasporka"></div>
+	{% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block section %}
+<span id="">События</span>
+{% endblock %}
+
+{% block events %}
+	<div>
+		{% for event in events %}
+			<p>
+				<a href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+			</p>
+			<p>{{ event.date }}</p>
+		{% endfor %}
+	</div>
+{% endblock %}

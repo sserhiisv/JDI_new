@@ -1,0 +1,16 @@
+{% block random_advice %}
+
+<div class="row f-read-set">
+    {% for post in random_advice_posts %}
+        <div class="f-read-block">
+            <div class="f-read-block-img" style="background-image: url({{ post.image.url }});"></div>
+            <div class="f-read-block-title">
+            	<a href="{% url 'post' slug=post.slug %}">
+	                <span class="f-read-block-title-inner">{{ post.title }}</span>
+	            </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

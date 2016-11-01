@@ -1,0 +1,92 @@
+/* new posts */
+.new {
+	padding: 30px;
+	width: 100%;
+}
+
+.new-posts {
+	width: 100%;
+}
+
+.new-posts-inner {
+	width: 100%;
+	border-bottom: solid 1px #cc0000;
+}
+
+.new-posts-img {
+	float: left;
+	height: 200px;
+	width: 40%;
+	background-size: cover;
+    background-position: center;
+}
+
+.new-posts-about {
+	float: left;
+	height: 200px;
+	width: 60%;
+}
+
+.new-posts-about-title {
+	width: 100%;
+	padding: 20px;
+	font-size: 20px;
+	padding-bottom: 0;
+}
+
+.new-posts-about-desc {
+	width: 100%;
+	padding: 20px;
+}
+
+.new-rasporka {
+	width: 100%;
+	height: 20px;
+}
+
+.new-section {
+	width: 100%;
+	height: 40px;
+	font-size: 20px;
+}
+/* end new posts */
+
+/* new events-facts */
+
+.new-events-inner {
+	width: 100%;
+	padding-top: 10px;
+}
+
+.new-events-img {
+	float: left;
+	width: 40%;
+	background-size: cover;
+    background-position: center;
+}
+
+.new-events-title {
+	float: left;
+	width: 60%;
+	padding: 5px 10px;
+}
+
+.new-facts-inner {
+	width: 100%;
+	padding-top: 10px;
+}
+
+.new-facts-img {
+	float: left;
+	width: 40%;
+	background-size: cover;
+    background-position: center;
+}
+
+.new-facts-title {
+	float: left;
+	width: 60%;
+	padding: 5px 10px;
+}
+
+/* end new events-facts */

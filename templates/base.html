@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load categories_list %}
+{% load most_reading %}
+{% load random_advice %}
+{% load category_top_post %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <title>Just double i | </title>
+        
+        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/mainstyle.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/component.css" %}" />
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="{% static "js/zoom-elements.js" %}"></script>
+        {% block loadfiles %}{% endblock %}
+    </head>
+    
+    <body>
+        <div class="container-fluid maket">
+            <div class="header-inner">
+                <div class="logo-block">
+                    <a href="{% url 'home' %}">
+                        <span id="logo">Just double i</span>
+                    </a>
+                    {% block section %}{% endblock %}
+                </div>
+                <div class="logo-bar">
+                    <a href="{% url 'home' %}">
+                        <span>Главная</span>
+                    </a>
+                    <a href="{% url 'latest-posts' %}">
+                        <span>Новое</span>
+                    </a>
+                    <a href="{% url 'popular-posts' %}">
+                        <span>Популярное</span>
+                    </a>
+                </div>
+                <div class="column">
+                    <div class="social-header">
+                        <img src="images/123/f.png">
+                        <img src="images/123/vk.png">
+                        <img src="images/123/google.png">
+                    </div>
+                    <div id="sb-search" class="sb-search">
+                        <form>
+                            <input class="sb-search-input" placeholder="Enter your search term..." type="text" value="" name="search" id="search">
+                            <input class="sb-search-submit" type="submit" value="">
+                            <span class="sb-icon-search"></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">  
+                <div class="left col-lg-9 col-md-9 col-ls-9">
+                    <div class="container-fluid">
+                        {% block home %}{% endblock %}
+                        {% block latest_posts %}{% endblock %}
+                        {% block popular %}{% endblock %}
+                        {% block category_posts %}{% endblock %}
+                        {% block post %}{% endblock %}
+                        {% block events %}{% endblock %}
+                        {% block facts %}{% endblock %}
+                        {% block tag %}{% endblock %}
+                    </div>
+                </div>
+
+                <div class="right col-lg-3 col-md-3 col-ls-3">
+
+                    {% block list_of_categories %}
+                    {% get_list_categories %}
+                    {% endblock %}
+
+                    <div class="right-popular">
+                        <div class="section-title">
+                            <h4>Самое читаемое</h4>
+                        </div>
+
+                        {% block most_reading_posts %}
+                        {% get_most_reading %}
+                        {% endblock %}
+                    </div>
+
+                    <div class="right-popular-inner-middle"></div>
+
+                    <br>
+
+                    <div class="right-top-cat">
+                        <div class="section-title">
+                            <h4>Топ по категориям </h4>
+                        </div>
+
+                        {% block top_post_by_category %}
+                        {% get_category_top %}
+                        {% endblock %}
+                    </div>
+
+                    <div class="right-ad"></div>
+                </div>  
+            </div>
+
+            <div class="f-read">
+                <div class="f-read-title">
+                    <span>random советует почитать...</span>
+                </div>
+
+                {% block random_advice %}
+                {% get_random_advice %}
+                {% endblock %}
+            </div>
+
+            <div class="footer">
+                <div class="footer-inner">
+                    <dl class="footer-info">
+                        <dt>Разделы..</dt>
+                        <dd>
+                            <a href="{% url 'home' %}">Главная</a>
+                        </dd>
+                        <dd>
+                            <a href="{% url 'latest-posts' %}">Новое</a>
+                        </dd>
+                        <dd>
+                            <a href="{% url 'popular-posts' %}">Популярное</a>
+                        </dd>
+                    </dl>
+                    <dl class="footer-info">
+                        <dt>...</dt>
+                        <dd>
+                            <a href="{% url 'events' %}">События</a>
+                        </dd>
+                        <dd>
+                            <a href="{% url 'facts' %}">Факты</a>
+                        </dd>
+                    </dl>
+                    <dl class="footer-info">
+                        <dt>Инфо..</dt>
+                        <dd>Про</dd>
+                        <dd>Соглашение</dd>
+                    </dl>
+                    <dl class="footer-info">
+                        <dt>...</dt>
+                        <dd>Помощь</dd>
+                        <dd>Другое</dd>
+                    </dl>
+                    <dl class="footer-rights">
+                        <dd>Just double i</dd>
+                        <dd>© 2016</dd>
+                        <dd>All Rights Reserved</dd>
+                    </dl>
+                    <div class="footer-social">
+                        <img src="images/123/f.png">
+                        <img src="images/123/vk.png">
+                        <img src="images/123/google.png">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="js/classie.js"></script>
+        <script src="js/uisearch.js"></script>
+        <script>
+            new UISearch(document.getElementById('sb-search'));
+        </script>
+    </body>
+</html>

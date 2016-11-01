@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block facts %}
+	<div>
+		<p>{{ fact.title }}</p>
+		<p>{{ fact.content }}</p>
+		<p>{{ fact.date }}</p>
+		<p>{{ fact.author }}</p>
+	</div>
+{% endblock %}

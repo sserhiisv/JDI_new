@@ -1,0 +1,12 @@
+<div id="right-categories">
+    <ul class="nav nav-pills nav-stacked red">
+        {% for category in categories %}
+            <li>
+                <a class="categories" href="{% url 'category' slug=category.slug %}">
+                    <span class="{{ category.icon }}"></span>&nbsp;
+                    {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

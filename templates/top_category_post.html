@@ -1,0 +1,16 @@
+<div class="top-category">
+    {% for post in posts %}
+        <div class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object top-category-img" src="{{ post.image.url }}" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <a href="{% url 'post' slug=post.slug %}" title="{{ post.title }}">
+                    <h4 class="media-heading">{{ post.title|truncatewords:5 }}</h4>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
