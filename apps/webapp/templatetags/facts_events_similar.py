@@ -7,7 +7,6 @@ register = template.Library()
 
 @register.inclusion_tag('event_fact_similar.html')
 def event_fact_similar():
-    args = list()
     events = Event.objects.filter(status='published')[:5]
     facts = Fact.objects.filter(status='published')[:5]
     return {'events': events, 'facts': facts}

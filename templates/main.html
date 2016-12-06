@@ -1,8 +1,23 @@
 {% extends 'base.html' %}
+
 {% load staticfiles %}
+{% load i18n %}
+{% load thumbnail %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block title %}
+    <title>Just double i</title>
+{% endblock %}
+
+{% block meta_desc %}
+	<meta name="keywords" content="Just double i">
+    <meta name="description" content="Just double i">
+{% endblock %}
 
 {% block loadfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/slider.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/home-posts.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "css/home-events-facts.css" %}">
     <script src="{% static "js/slider.js" %}"></script>
 {% endblock %}
 
@@ -12,16 +27,18 @@
     <div class="left col-lg-5 col-md-5 ls-hidden">
         <div class="left-panel">
 
-            <div class="Wrap">
+            <div class="Wrap hidden-sm hidden-xs">
                <div class="slideWrp">
                		{% for rand_post in rand_posts %}
 	                    <div class="thumbnail slide-block">
-	                        <img src="{{ rand_post.image.url }}" alt="...">
+	                        {% thumbnail rand_post.image "500" as im %}
+	                        	<div class="slide-block-img" style="background-image: url({{ im.url }});"></div>
+	                        {% endthumbnail %}
 	                        <div class="caption">
 	                            <a href="{% url 'post' slug=rand_post.slug %}">
-	                            	<h3>{{ rand_post.title }}</h3>
+	                            	<h3>{{ rand_post.title}}</h3>
 	                            </a>
-	                            <p>{{ rand_post.description|truncatewords:20 }}</p>
+	                            <p>{{ rand_post.description|safe|truncatewords:20 }}</p>
 	                        </div>
 	                    </div>
                     {% endfor %}
@@ -37,10 +54,10 @@
                 </div>
             </div>
 
-            <div class="events">
+            <div class="events hidden-sm hidden-xs">
                 <div class="section-title">
                 	<a href="{% url 'events' %}">
-                    	<h4>События</h4>
+                    	<h4>{% trans 'События' %}</h4>
                     </a>
                 </div>
                 <ul class="nav nav-pills nav-stacked blue">
@@ -48,13 +65,16 @@
 	                    <li>
 	                        <div class="media">
 	                            <div class="media-left events-img">
-	                                <a href="">
-	                                    <img class="media-object" width="150px" src="{{ event.image.url }}" alt="...">
+	                                <a href="{% url 'event' slug=event.slug %}">
+	                                	{% thumbnail event.image "200" as im %}
+											<img class="media-object" width="150px" src="{{ im.url }}" alt="{{ event.title }}">
+	                        			{% endthumbnail %}
 	                                </a>
 	                            </div>
 	                            <div class="media-body">
+	                            	<p>{{ event.ev_date }}</p>
 	                                <h4 class="media-heading">
-	                                    <a href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+	                                    <a href="{% url 'event' slug=event.slug %}">{{ event.title|truncatewords:7 }}</a>
 	                                </h4>
 	                            </div>
 	                        </div>
@@ -65,10 +85,10 @@
 
             <br>
 
-            <div class="events">
+            <div class="events hidden-sm hidden-xs">
                 <div class="section-title">
                     <a href="{% url 'facts' %}">
-                    	<h4>Интересные факты</h4>
+                    	<h4>{% trans 'Интересные факты' %}</h4>
                     </a>
                 </div>
                 <ul class="nav nav-pills nav-stacked blue">
@@ -76,13 +96,15 @@
 	                    <li>
 	                        <div class="media">
 	                            <div class="media-left events-img">
-	                                <a href="">
-	                                    <img class="media-object" width="150px" src="{{ fact.image.url }}" alt="...">
+	                                <a href="{% url 'fact' slug=fact.slug %}">
+	                                	{% thumbnail fact.image "200" as im %}
+	                                    	<img class="media-object" width="150px" src="{{ im.url }}" alt="{{ fact.title }}">
+	                                    {% endthumbnail %}
 	                                </a>
 	                            </div>
 	                            <div class="media-body">
 	                                <h4 class="media-heading">
-	                                    <a  href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+	                                    <a  href="{% url 'fact' slug=fact.slug %}">{{ fact.title|truncatewords:7 }}</a>
 	                                </h4>
 	                            </div>
 	                        </div>
@@ -97,34 +119,88 @@
         <div class="container-fluid main">
 
         	{% for post in last_posts %}
-	            <div class="main-post-inner">
-	                <div class="main-post-inner-desc" style="background-image: url({{ post.image.url }});">
-	                    <div class="main-post-title">
+        		<a class="main-post-link" href="{% url 'post' slug=post.slug %}">
+        			{% thumbnail post.image "600" as im %}
+			            <div class="main-post-inner" style="background-image: url({{ im.url }});">
+			                <div class="main-post-inner-desc" >
+			                    <div class="main-post-title">
 
-	                        <div class="main-post-title-desc">
-	                            <span class="glyphicon glyphicon-bookmark"></span>
-	                            <a href="">
-	                            {{ post.category }}
-	                            </a>
-	                            <span class="glyphicon glyphicon-pencil"></span>
-	                            <span>{{ post.date }}</span>
-	                            <span class="label label-success">
-	                                <span class="glyphicon glyphicon-eye-open"></span> {{ post.views }}
-	                            </span>
-	                        </div>
+			                        <div class="main-post-title-desc">
+			                            {% ifequal LANGUAGE_CODE 'uk' %}
+						                    <span>{{ post.category.name_ua }}</span>
+						                {% else %}
+						                    <span>{{ post.category }}</span>
+						                {% endifequal %}
+			                        </div>
 
-	                        <div class="main-post-title-t">
-	                            <a href="{% url 'post' slug=post.slug %}">
-	                            	<span class="main-title">{{ post.title }}</span>
-	                            </a>
-	                        </div>
-
-	                    </div>
-	                </div>
-	            </div>
-
+			                        <div class="main-post-title-t">
+		                            	<span class="main-title">{{ post.title|truncatewords:7 }}</span>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+		            {% endthumbnail %}
+	            </a>
             	<div class="underliner"></div>
             {% endfor %}
+        </div>
+
+
+        <div class="events hidden-md hidden-lg">
+            <div class="section-title">
+            	<a href="{% url 'events' %}">
+                	<span>{% trans 'События' %}</span>
+                </a>
+            </div>
+            <ul class="nav nav-pills nav-stacked blue">
+            	{% for event in events %}
+                    <li>
+                        <div class="media">
+                            <div class="media-left events-img">
+                                <a href="{% url 'event' slug=event.slug %}">
+                                	{% thumbnail event.image "200" as im %}
+										<img class="media-object" width="150px" src="{{ im.url }}" alt="{{ event.title }}">
+                        			{% endthumbnail %}
+                                </a>
+                            </div>
+                            <div class="media-body">
+                            	<p class="hidden-xs hidden-sm">{{ event.ev_date }}</p>
+                                <a class="media-heading hidden-lg hidden-md" href="{% url 'event' slug=event.slug %}">{{ event.title|truncatewords:7 }}</a>
+                                <a class="media-heading hidden-xs hidden-sm" href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <br>
+
+        <div class="events hidden-md hidden-lg">
+            <div class="section-title">
+                <a href="{% url 'facts' %}">
+                	<span>{% trans 'Интересные факты' %}</span>
+                </a>
+            </div>
+            <ul class="nav nav-pills nav-stacked blue">
+            	{% for fact in facts %}
+                    <li>
+                        <div class="media">
+                            <div class="media-left events-img">
+                                <a href="{% url 'fact' slug=fact.slug %}">
+                                	{% thumbnail fact.image "200" as im %}
+                                    	<img class="media-object" width="150px" src="{{ im.url }}" alt="{{ fact.title }}">
+                                    {% endthumbnail %}
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a class="media-heading hidden-lg hidden-md" href="{% url 'fact' slug=fact.slug %}">{{ fact.title|truncatewords:7 }}</a>
+                                <a class="media-heading hidden-xs hidden-sm" href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>

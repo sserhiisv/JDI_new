@@ -1,10 +1,48 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+{% load i18n %}
+{% load new_events_facts %}
+
+{% block title %}
+    <title>{{ fact.title }} | Just double i</title>
+{% endblock %}
+
+{% block meta_desc %}
+	<meta name="keywords" content="{{ fact.title }}">
+    <meta name="description" content="{{ fact.title }}">
+{% endblock %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/fact.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<script src="{% static "js/new.js" %}"></script>
+{% endblock %}
+
+{% block section %}
+<span id="logo-section">{% trans 'Интересные факты' %}</span>
+{% endblock %}
+
 {% block facts %}
-	<div>
-		<p>{{ fact.title }}</p>
-		<p>{{ fact.content }}</p>
-		<p>{{ fact.date }}</p>
-		<p>{{ fact.author }}</p>
+	<div class="fact">
+		<div class="fact-title">
+			<p>{{ fact.title }}</p>
+		</div>
+		<hr>
+		<div class="fact-info">
+			<span>{{ fact.date }}</span> |
+			<span>{{ fact.author }}</span>
+		</div>
+		<div class="fact-content">
+			<p>{{ fact.content|safe }}</p>
+		</div>
+		<div class="fact-img">
+			<img src="{{ fact.image.url }}">
+		</div>
 	</div>
+
+	{% block events_facts %}
+    {% get_new_events_facts %}
+    {% endblock %}
+
 {% endblock %}

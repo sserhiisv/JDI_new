@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}
+    <title>{% trans 'Поиск' %} | Just double i</title>
+{% endblock %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/search.css" %}">
+{% endblock %}
+
+{% block section %}
+	<span id="logo-section">{% trans 'Поиск' %}</span>
+{% endblock %}
+
+{% block search %}
+	<div class="search">
+	    <div class="results" id="results">
+	    	<div class="search-results">
+				{% if messages %}
+					<h4>Oops!</h4>
+					<center>
+						<ul id="messages">
+							{% for message in messages %}
+								<li>{{ message }}</li>
+							{% endfor %}
+						</ul>
+					</center>
+				{% endif %}
+
+				<ul class="nav nav-pills nav-stacked blue">
+					{% for post in result %}
+						<li>
+							<a class="button_category_posts" href="{% url 'post' slug=post.slug %}">{{ post.title|truncatewords:7 }}</a>
+							<span class="rubric">{{ post.category }}</span>
+							<span class="rubric">{{ post.date }}</span>
+							<span class="rubric">{{ post.author }}</span>
+						</li>
+					{% endfor %}
+				</ul>
+				<ul class="nav nav-pills nav-stacked blue">
+					{% for event in result_event %}
+						<li>
+							<a class="button_category_posts" href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+							<span class="rubric">{% trans 'События' %}</span>
+							<span class="rubric">{{ event.ev_date }}</span>
+							<span class="rubric">{{ event.ev_place }}</span>
+						</li>
+					{% endfor %}
+				</ul>
+				<ul class="nav nav-pills nav-stacked blue">
+					{% for fact in result_fact %}
+						<li>
+							<a class="button_category_posts" href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+							<span class="rubric">{% trans 'Интересные факты' %}</span>
+							<span class="rubric">{{ event.content|truncatewords:20|safe }}</span>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

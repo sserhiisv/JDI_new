@@ -1,7 +1,13 @@
+# -*- coding: utf-8 -*-
 # Import sys (to adjust Python path)
 import sys
+import os
+
+
 # Import some utility functions
 from os.path import abspath, basename, dirname, join, normpath
+
+from django.utils.translation import ugettext_lazy
 
 # #########################################################
 
@@ -47,13 +53,17 @@ DEFAULT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'ckeditor',
+    'sorl.thumbnail',
+    'hitcount',
     'webapp',
 ]
 
 # Middlewares
 MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,13 +87,22 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
-                'django.contrib.messages.context_processors.messages'
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
 
 
+# Context processors
+'''
+TEMPLATE_CONTEXT_PROCESSORS = (
+  # ...
+  'django.core.context_processors.request',
+  # ...
+)
+
+'''
 # ##### SECURITY CONFIGURATION ############################
 
 # We store the secret key here
@@ -118,11 +137,25 @@ MEDIA_URL = '/media/'
 # ##### DEBUG CONFIGURATION ###############################
 DEBUG = False
 
+TEMPLATE_DEBUG = DEBUG
 
+ALLOWED_HOSTS = ['localhost']
 # ##### INTERNATIONALIZATION ##############################
 
 LANGUAGE_CODE = 'en'
 TIME_ZONE = 'Europe/Helsinki'
+
+###
+LANGUAGES = [
+    ('ru', ('RU')),
+    ('uk', ('UA')),
+]
+
+LOCALE_PATHS = [
+    join(PROJECT_ROOT, 'locale'),
+]
+
+###
 
 # Internationalization
 USE_I18N = True
@@ -134,20 +167,37 @@ USE_L10N = True
 USE_TZ = True
 
 
-## CKEDITOR
+############### CKEDITOR ###########################
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+#CKEDITOR_CONFIGS = {
+#    'ckeditor': {
+#        'toolbar': 'none',
+ #       'allowedContent': True,
+ #   },
+#}
 
 CKEDITOR_CONFIGS = {
     'ckeditor': {
+        'removePlugins': 'stylesheetparser',
         'toolbar': 'none',
-    },
+        'allowedContent': True,
+    }
 }
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 
-# Finally grab the SECRET KEY
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+
+
+
+
+############################## Finally grab the SECRET KEY
 try:
     SECRET_KEY = open(SECRET_FILE).read().strip()
 except IOError:

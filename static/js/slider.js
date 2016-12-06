@@ -4,6 +4,18 @@ $(document).ready(function() {
     $(".indexActivate").show();
     $(".indexActivate li:first").addClass("active");
 
+    function resizePostImg() {
+        var imageWidth = $('.slideWrp').find('.slide-block-img').width();
+
+        $('.slideWrp').find('.slide-block-img').css('height', 0.5625 * imageWidth + 'px');
+    }
+
+    resizePostImg();
+
+    $(window).resize(function() {
+        resizePostImg();
+    });
+
      /* resizing of slider
     alert(field);
     $('.Wrap').css('width', field + 'px');

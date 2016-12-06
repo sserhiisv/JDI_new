@@ -18,6 +18,12 @@
     margin-bottom: 10px;
     margin-right: 0px;
     height: 400px;
+    overflow: hidden;
+}
+
+.slide-block-img {
+    background-size: cover;
+    background-position: center;
 }
 
 .indexActivate {
@@ -127,7 +133,7 @@
     }
 }
 
-@media (max-width: 1050px) and (min-width: 992px) {
+@media (max-width: 1050px) and (min-width: 993px) {
 
     .Wrap {
         width: 280px;

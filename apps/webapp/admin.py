@@ -1,11 +1,15 @@
 from django.contrib import admin
+from django.utils.html import format_html
+
+from sorl.thumbnail import get_thumbnail
 
 from webapp.models import Post, Category, Event, Fact, Tag
 
 
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     fields = ['title', 'author', 'tag', 'category', 'description', 'content', 'date', 'image']
-    list_display = ['title', 'slug', 'status', 'date', 'views', 'category']
+    list_display = ['title', 'photo_thumbnail', 'slug', 'status', 'category', 'date']
     list_filter = ['date', 'title', 'category', 'status', 'views']
     search_fields = ['title', 'status', 'date', 'category', 'author']
     actions = ['make_published']
@@ -18,7 +22,18 @@ class PostAdmin(admin.ModelAdmin):
             message_bit = "%s stories were" % rows_updated
             self.message_user(request, "%s successfully marked as published." % message_bit)
 
+    def photo_thumbnail(self, obj):
+        im = get_thumbnail(obj.image, '60x60', quality=99)
+        return format_html(
+            '<img src="{}" border="0" alt="" width="{}" height="{}" />',
+            im.url, im.width, im.height
+        )
 
+    photo_thumbnail.short_description = u'Foto'
+    photo_thumbnail.allow_tags = True
+
+
+@admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     fields = ['title', 'author', 'content', 'ev_date', 'ev_place', 'date', 'image']
     list_display = ['title', 'slug', 'status', 'author', 'date']
@@ -35,6 +50,7 @@ class EventAdmin(admin.ModelAdmin):
             self.message_user(request, "%s successfully marked as published." % message_bit)
 
 
+@admin.register(Fact)
 class FactAdmin(admin.ModelAdmin):
     fields = ['title', 'author', 'content', 'date', 'image']
     list_display = ['title', 'slug', 'status', 'author', 'date']
@@ -51,17 +67,13 @@ class FactAdmin(admin.ModelAdmin):
             self.message_user(request, "%s successfully marked as published." % message_bit)
 
 
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    fields = ['name', 'icon']
-    list_display = ['name', 'slug']
+    fields = ['name', 'name_ua', 'icon']
+    list_display = ['name', 'name_ua', 'slug']
 
 
+@admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     fields = ['title']
     list_display = ['title', 'slug']
-
-admin.site.register(Post, PostAdmin)
-admin.site.register(Event, EventAdmin)
-admin.site.register(Fact, FactAdmin)
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Tag, TagAdmin)

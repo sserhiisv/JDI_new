@@ -1,16 +1,91 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% block title %}
+    <title>{% trans 'События' %} | Just double i</title>
+{% endblock %}
+
+{% block meta_desc %}
+	<meta name="keywords" content="События">
+    <meta name="description" content="События">
+{% endblock %}
+
+{% block loadfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/facts-events.css" %}" />
+{% endblock %}
+
 {% block section %}
-<span id="">События</span>
+	<span id="logo-section">{% trans 'События' %}</span>
 {% endblock %}
 
 {% block events %}
-	<div>
+	<div class="events-list" style="padding: 30px;">
 		{% for event in events %}
-			<p>
-				<a href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
-			</p>
-			<p>{{ event.date }}</p>
+			<div class="event-block">
+				{% thumbnail event.image "300" as im %}
+					<a href="{% url 'event' slug=event.slug %}">
+						<div class="event-block-img" style="background-image: url({{ im.url }});"></div>
+					</a>
+				{% endthumbnail %}
+				<div class="event-block-about">
+					<div class="event-block-about-title">
+						<a href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+					</div>
+					<div class="event-block-about-date-place hidden-sm hidden-xs">
+						<span>
+							{{ event.ev_date }} | {{ event.ev_place }}
+						</span>
+					</div>
+					<div class="event-block-about-desc hidden-xs hidden-sm">
+						{{ event.content|safe|truncatewords:20 }}
+					</div>
+				</div>
+			</div>
+			<div class="rasporka"></div>
 		{% endfor %}
 	</div>
+
+	{% if is_paginated %}
+		<div class="pag">
+		  	<ul class="pagination">
+		    	{% if page_obj.has_previous %}
+		      		<li>
+		      			<a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+		      		</li>
+		    	{% else %}
+		      		<li class="disabled">
+		      			<span>&laquo;</span>
+		      		</li>
+		    	{% endif %}
+
+		    	{% for i in paginator.page_range %}
+		      		{% if page_obj.number == i %}
+		        		<li class="active">
+		        			<span>
+		        				{{ i }} <span class="sr-only">(current)</span>
+		        			</span>
+		        		</li>
+		      		{% else %}
+		        		<li>
+		        			<a href="?page={{ i }}">{{ i }}</a>
+		        		</li>
+		      		{% endif %}
+		      	{% endfor %}
+
+		    	{% if page_obj.has_next %}
+		      		<li>
+		      			<a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+		      		</li>
+		    	{% else %}
+		      		<li class="disabled">
+		      			<span>&raquo;</span>
+		      		</li>
+		    	{% endif %}
+		  	</ul>
+		</div>
+	{% endif %}
+	
 {% endblock %}

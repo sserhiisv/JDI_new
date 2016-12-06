@@ -1,0 +1,10 @@
+Django==1.10.2
+django-ckeditor==5.1.1
+django-hitcount==1.2.2
+django-uuslug==1.1.8
+Pillow==3.4.2
+python-slugify==1.2.1
+pytz==2016.7
+sorl-thumbnail==12.3
+Unidecode==0.4.19
+urllib3==1.19

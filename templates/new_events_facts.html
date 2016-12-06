@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load thumbnail %}
+
+<div class="row new-facts-events">
+	<div class="new-events col-lg-6 col-md-6">
+		<div class="section-title">
+			<span>{% trans 'Новые события' %}</span>
+		</div>
+		{% for new_event in new_events %}
+			<a href="{% url 'event' slug=new_event.slug %}">
+				<div class="new-events-inner">
+					{% thumbnail new_event.image "200" as im %}
+						<div class="new-events-img" style="background-image: url({{ im.url }});"></div>
+					{% endthumbnail %}
+					<div class="new-events-title">
+						<p>{{ new_event.title|truncatewords:7 }}</p>
+						<span class="hidden-sm hidden-xs">{{ new_event.ev_date }}</span>
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+
+	<div class="new-facts col-lg-6 col-md-6">
+		<div class="section-title">
+			<span>{% trans 'Новые факты' %}</span>
+		</div>
+		{% for new_fact in new_facts %}
+			<a href="{% url 'fact' slug=new_fact.slug %}">
+				<div class="new-facts-inner">
+					{% thumbnail new_fact.image "200" as im %}
+						<div class="new-facts-img" style="background-image: url({{ im.url }});"></div>
+					{% endthumbnail %}
+					<div class="new-facts-title">
+						{{ new_fact.title|truncatewords:7 }}
+					</div>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+</div>

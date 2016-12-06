@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
+
 {% load staticfiles %}
+{% load new_events_facts %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}
+    <title>{{ event.title }} | Just double i</title>
+{% endblock %}
+
+{% block meta_desc %}
+	<meta name="keywords" content="{{ event.title }}">
+    <meta name="description" content="{{ event.title }}">
+{% endblock %}
 
 {% block loadfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/event.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<script src="{% static "js/new.js" %}"></script>
+{% endblock %}
+
+{% block section %}
+	<span id="logo-section">{% trans 'События' %}</span>
 {% endblock %}
 
 {% block events %}
@@ -16,11 +35,18 @@
 				<p>Место: {{ event.ev_place }}</p>
 			</div>
 			<div class="event-img">
-				<img width="300" src="{{ event.image.url }}">
+				{% thumbnail event.image "300" as im %}
+					<img src="{{ im.url }}">
+				{% endthumbnail %}
 			</div>
 		</div>
+		<hr>
 		<div class="event-content">
-			<p>{{ event.content }}</p>
+			<p>{{ event.content|safe }}</p>
 		</div>
 	</div>
+
+	{% block events_facts %}
+    {% get_new_events_facts %}
+    {% endblock %}
 {% endblock %}

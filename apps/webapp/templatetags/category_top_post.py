@@ -10,5 +10,5 @@ def get_category_top():
     categories = Category.objects.all()
     posts = list()
     for category in categories:
-        posts.append(Post.objects.filter(status='published').filter(category__name=category).order_by('views').last())
+        posts.append(Post.objects.filter(status='published').filter(category__name=category).order_by('views').first())
     return {'posts': posts}
