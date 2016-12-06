@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load i18n %}
 {% load thumbnail %}
+{% load compress %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block title %}
@@ -15,10 +16,15 @@
 {% endblock %}
 
 {% block loadfiles %}
+    {% compress css %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/slider.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "css/home-posts.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "css/home-events-facts.css" %}">
+    {% endcompress %}
+
+    {% compress js %}
     <script src="{% static "js/slider.js" %}"></script>
+    {% endcompress %}
 {% endblock %}
 
 {% block home %}

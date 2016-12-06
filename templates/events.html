@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load i18n %}
 {% load thumbnail %}
+{% load compress %}
 
 {% block title %}
     <title>{% trans 'События' %} | Just double i</title>
@@ -14,7 +15,9 @@
 {% endblock %}
 
 {% block loadfiles %}
+	{% compress css %}
 	<link rel="stylesheet" type="text/css" href="{% static "css/facts-events.css" %}" />
+	{% endcompress %}
 {% endblock %}
 
 {% block section %}

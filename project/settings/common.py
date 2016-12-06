@@ -57,6 +57,7 @@ DEFAULT_APPS = [
     'ckeditor',
     'sorl.thumbnail',
     'hitcount',
+    'compressor',
     'webapp',
 ]
 
@@ -103,6 +104,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 '''
+
+# staticfiles finder
+
+STATICFILES_FINDERS = (
+    'compressor.finders.CompressorFinder',
+)
+
 # ##### SECURITY CONFIGURATION ############################
 
 # We store the secret key here
