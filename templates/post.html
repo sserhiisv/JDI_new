@@ -16,24 +16,24 @@
 
 {% block loadfiles %}
 	{% compress css %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/post.css" %}" />
+	<link rel="stylesheet" type="text/css" href='{% static "css/post.css" %}' />
 	{% endcompress %}
 
 	{% compress js %}
-	<script src="{% static "js/bootstrap.min.js" %}"></script>
-	<script src="{% static "js/post.js" %}"></script>
-	<script id="twitter-wjs" type="text/javascript" async defer src="//platform.twitter.com/widgets.js"></script>
+	<script src='{% static "js/bootstrap.min.js" %}'></script>
+	<script src='{% static "js/post.js" %}'></script>
+	<!--<script id="twitter-wjs" type="text/javascript" async defer src="//platform.twitter.com/widgets.js"></script>-->
 
-	<script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
-	<script src="//yastatic.net/share2/share.js"></script>
+	<!--<script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>-->
+	<!--<script src="//yastatic.net/share2/share.js"></script>-->
 	{% endcompress %}
 {% endblock %}
 
 {% block section %}
 	{% ifequal LANGUAGE_CODE 'uk' %}
-        <span id="logo-section">{{ post.category.name_ua }}</span>
+        <span id="logo-section">{{ read_post.category.name_ua }}</span>
     {% else %}
-        <span id="logo-section">{{ post.category }}</span>
+        <span id="logo-section">{{ read_post.category }}</span>
     {% endifequal %}
 {% endblock %}
 
@@ -41,16 +41,16 @@
 
 <div class="post">
 	<div class="post-info">
-		{{ post.date }} |
+		{{ read_post.date }} |
 		<br class="hidden-lg hidden-md">
-		{{ post.author }} | 
+		{{ read_post.author }} |
 		<span class="glyphicon glyphicon-eye-open"></span> {{ hitcount.total_hits }}
 	</div>
 	<div class="post-title">
-		{{ post.title }}
+		{{ read_post.title }}
 	</div>
 	<div class="post-description">
-		{{ post.description|safe }}
+		{{ read_post.description|safe }}
 	</div>
 	<!--
 	<div class="post-img">
@@ -58,11 +58,11 @@
 	</div>
 	-->
 	<div class="post-content" id="post-content">
-		{{ post.content|safe }}
+		{{ read_post.content|safe }}
 	</div>
 	<div class="post-tags">
 		<span>Теги:</span>
-		{% for tag in post.tag.all %}
+		{% for tag in read_post.tag.all %}
 			<a href="{% url 'tag' slug=tag.slug %}">
 				<span class="label label-primary">{{ tag }}</span>
 			</a>

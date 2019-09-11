@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 from webapp import views
 
+
 handler404 = 'views.handler404'
 handler500 = 'views.handler500'
 
@@ -22,7 +23,8 @@ urlpatterns += [
     url(r'^new_posts/$', views.NewPosts.as_view(), name="latest-posts"),
     url(r'^popular/$', views.PopularPosts.as_view(), name="popular-posts"),
     url(r'^category/(?P<slug>[-\w]+)/$', views.CategoryPosts.as_view(), name='category'),
-    url(r'^post/(?P<slug>[-\w]+)/$', views.ViewPost.as_view(), name='post'),
+    # url(r'^read_post/(?P<pk>\d+)/$', views.ViewPost.as_view(), name='post'),
+    url(r'^read_post/(?P<slug>.+)/$', views.ViewPost.as_view(), name='post'),
     url(r'^events/$', views.Events.as_view(), name='events'),
     url(r'^events/(?P<slug>[-\w]+)/$', views.ViewEvent.as_view(), name='event'),
     url(r'^facts/$', views.Facts.as_view(), name='facts'),

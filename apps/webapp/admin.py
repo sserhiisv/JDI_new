@@ -3,10 +3,10 @@ from django.utils.html import format_html
 
 from sorl.thumbnail import get_thumbnail
 
-from webapp.models import Post, Category, Event, Fact, Tag
+from webapp.models import ReadPost, Category, Event, Fact, Tag
 
 
-@admin.register(Post)
+@admin.register(ReadPost)
 class PostAdmin(admin.ModelAdmin):
     fields = ['title', 'author', 'tag', 'category', 'description', 'content', 'date', 'image']
     list_display = ['title', 'photo_thumbnail', 'slug', 'status', 'category', 'date']

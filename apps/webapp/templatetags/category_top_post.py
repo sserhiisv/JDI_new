@@ -1,6 +1,6 @@
 from django import template
 
-from webapp.models import Post, Category
+from webapp.models import ReadPost, Category
 
 register = template.Library()
 
@@ -10,5 +10,7 @@ def get_category_top():
     categories = Category.objects.all()
     posts = list()
     for category in categories:
-        posts.append(Post.objects.filter(status='published').filter(category__name=category).order_by('views').first())
+        posts.append(
+            ReadPost.objects.filter(status='published').filter(category__name=category).order_by('views').first()
+        )
     return {'posts': posts}

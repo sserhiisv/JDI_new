@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.conf.urls.i18n import i18n_patterns
 
-from .sitemap import *
+from apps.webapp.sitemap import *
 
 
 sitemaps = {

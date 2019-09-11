@@ -25,10 +25,12 @@ SITE_NAME = basename(DJANGO_ROOT)
 # Collect static files here
 STATIC_ROOT = join(PROJECT_ROOT, 'run', 'static')
 
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
 # Collect media files here
 MEDIA_ROOT = join(PROJECT_ROOT, 'run', 'media')
 
-# look for static assets here
+# # look for static assets here
 STATICFILES_DIRS = [
     join(PROJECT_ROOT, 'static'),
 ]
@@ -54,6 +56,7 @@ DEFAULT_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.sites',
     'ckeditor',
     'sorl.thumbnail',
     'hitcount',
@@ -111,6 +114,10 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+# COMPRESS_OFFLINE = True
+#
+# COMPRESS_ENABLED = True
+
 # ##### SECURITY CONFIGURATION ############################
 
 # We store the secret key here
@@ -141,9 +148,8 @@ STATIC_URL = '/static/'
 # The URL for media files
 MEDIA_URL = '/media/'
 
-
 # ##### DEBUG CONFIGURATION ###############################
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -178,6 +184,8 @@ USE_TZ = True
 ############### CKEDITOR ###########################
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+# CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+
 
 #CKEDITOR_CONFIGS = {
 #    'ckeditor': {
@@ -194,6 +202,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+# CKEDITOR_RESTRICT_BY_USER = True
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 

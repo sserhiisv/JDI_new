@@ -54,7 +54,7 @@ class Tag(models.Model):
         super(Tag, self).save(*args, **kwargs)
 
 
-class Post(models.Model):
+class ReadPost(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
     category = models.ForeignKey(Category)
@@ -64,14 +64,14 @@ class Post(models.Model):
     image = sorl.thumbnail.ImageField(null=True, blank=True, upload_to='images/posts', verbose_name=u'Images')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='draft')
     slug = models.SlugField('Slug')
-    tag = models.ManyToManyField(Tag, related_name='posts')
+    tag = models.ManyToManyField(Tag, related_name='readposts')
     views = GenericRelation(HitCount,
                             object_id_field='object_pk',
                             related_query_name='hit_count_generic_relation')
 
     class Meta:
-        verbose_name = 'Post'
-        verbose_name_plural = 'Posts'
+        verbose_name = 'ReadPost'
+        verbose_name_plural = 'ReadPosts'
         ordering = ("-date",)
 
     def __unicode__(self):
@@ -80,7 +80,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = uuslug(self.title, instance=self)
-        super(Post, self).save(*args, **kwargs)
+        super(ReadPost, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'slug': self.slug})

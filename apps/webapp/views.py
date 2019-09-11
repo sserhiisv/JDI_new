@@ -11,18 +11,18 @@ from django.db.models import Q
 
 from hitcount.views import HitCountDetailView
 
-from webapp.models import Post, Category, Event, Fact, Tag
+from webapp.models import ReadPost, Category, Event, Fact, Tag
 
 
 class HomePage(ListView):
     template_name = 'main.html'
-    model = Post
+    model = ReadPost
 
     def get_context_data(self, **kwargs):
         context = super(HomePage, self).get_context_data(**kwargs)
-        context['last_posts'] = Post.objects.filter(status='published') \
+        context['last_posts'] = ReadPost.objects.filter(status='published') \
                                             .filter(date__lte=datetime.now())[:5]
-        context['rand_posts'] = Post.objects.filter(status='published') \
+        context['rand_posts'] = ReadPost.objects.filter(status='published') \
                                             .filter(date__lte=datetime.now()) \
                                             .order_by('?')[:5]
         context['events'] = Event.objects.filter(status='published')[:5]
@@ -31,23 +31,23 @@ class HomePage(ListView):
 
 
 class NewPosts(ListView):
-    model = Post
+    model = ReadPost
     template_name = 'new_posts.html'
     paginate_by = 5
     context_object_name = 'new_posts'
 
     def get_queryset(self):
-        return Post.objects.filter(status='published') \
+        return ReadPost.objects.filter(status='published') \
                            .filter(date__lte=datetime.now())
 
 
 class PopularPosts(ListView):
     template_name = 'popular_posts.html'
-    model = Post
+    model = ReadPost
 
     def get_context_data(self, **kwargs):
         context = super(PopularPosts, self).get_context_data(**kwargs)
-        context['pop_posts'] = Post.objects.filter(status='published') \
+        context['pop_posts'] = ReadPost.objects.filter(status='published') \
                                            .filter(date__lte=datetime.now()) \
                                            .order_by('views')[:10]
         return context
@@ -55,12 +55,12 @@ class PopularPosts(ListView):
 
 class CategoryPosts(ListView):
     template_name = "category_posts.html"
-    model = Post
+    model = ReadPost
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(CategoryPosts, self).get_context_data(**kwargs)
-        context['cat_posts'] = Post.objects.filter(status='published') \
+        context['cat_posts'] = ReadPost.objects.filter(status='published') \
                                            .filter(date__lte=datetime.now()) \
                                            .filter(category__slug=self.kwargs.get('slug'))
         context['category'] = Category.objects.get(slug=self.kwargs.get('slug'))
@@ -68,16 +68,16 @@ class CategoryPosts(ListView):
 
 
 class ViewPost(HitCountDetailView):
-    model = Post
+    model = ReadPost
     template_name = "post.html"
     count_hit = True
 
     def get_context_data(self, **kwargs):
         context = super(ViewPost, self).get_context_data(**kwargs)
-        post = Post.objects.get(slug=self.kwargs['slug'])
-        context['post'] = post
-        context['similar'] = Post.objects.filter(date__lte=datetime.now()) \
-                                         .filter(category=post.category) \
+        r_post = ReadPost.objects.get(slug=self.kwargs['slug'])
+        context['read_post'] = r_post
+        context['similar'] = ReadPost.objects.filter(date__lte=datetime.now()) \
+                                         .filter(category=r_post.category) \
                                          .filter(~Q(slug=self.kwargs['slug'])) \
                                          .order_by('?')[:3]
         return context
@@ -122,12 +122,12 @@ class Room():
 
 
 class TagPosts(ListView):
-    model = Post
+    model = ReadPost
     template_name = "tag.html"
 
     def get_context_data(self, **kwargs):
         context = super(TagPosts, self).get_context_data(**kwargs)
-        context['posts'] = Post.objects.filter(date__lte=datetime.now()) \
+        context['posts'] = ReadPost.objects.filter(date__lte=datetime.now()) \
                                        .filter(tag__slug=self.kwargs['slug'])
         context['tag'] = Tag.objects.get(slug=self.kwargs['slug'])
         return context

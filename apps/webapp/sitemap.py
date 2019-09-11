@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.contrib.sitemaps import Sitemap
 
-from webapp.models import Post, Fact, Event
+from webapp.models import ReadPost, Fact, Event
 
 
 class PostSitemap(Sitemap):
@@ -10,7 +10,7 @@ class PostSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return Post.objects.filter(status='published') \
+        return ReadPost.objects.filter(status='published') \
                            .filter(date__lte=datetime.now())
 
     def lastmod(self, obj):
