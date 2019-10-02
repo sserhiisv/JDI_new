@@ -26,16 +26,16 @@
 
 {% block facts %}
 	<div class="facts-list" style="padding: 30px;">
-		{% for fact in facts %}
+		{% for fact_item in facts %}
 			<div class="fact-block">
-				{% thumbnail fact.image "250" as im %}
-					<a href="{% url 'fact' slug=fact.slug %}">
+				{% thumbnail fact_item.image "250" as im %}
+					<a href="{% url 'fact' pk=fact_item.pk %}">
 						<div class="fact-block-img" style="background-image: url({{ im.url }});"></div>
 					</a>
 				{% endthumbnail %}
 				<div class="fact-block-about">
 					<div class="fact-block-about-title">
-						<a href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+						<a href="{% url 'fact' pk=fact_item.pk %}">{{ fact_item.title }}</a>
 					</div>
 					<div class="fact-block-about-desc hidden-sm hidden-xs">
 						{{ fact.content|safe|truncatewords:30 }}

@@ -10,7 +10,7 @@
 
 {% block loadfiles %}
 	{% compress css %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/search.css" %}">
+	<link rel="stylesheet" type="text/css" href='{% static "css/search.css" %}'>
 	{% endcompress %}
 {% endblock %}
 
@@ -34,29 +34,35 @@
 				{% endif %}
 
 				<ul class="nav nav-pills nav-stacked blue">
-					{% for post in result %}
+					{% for result_post in result %}
 						<li>
-							<a class="button_category_posts" href="{% url 'post' slug=post.slug %}">{{ post.title|truncatewords:7 }}</a>
-							<span class="rubric">{{ post.category }}</span>
-							<span class="rubric">{{ post.date }}</span>
-							<span class="rubric">{{ post.author }}</span>
+							<a class="button_category_posts" href="{{ result_post.get_absolute_url }}">
+								{{ result_post.title|truncatewords:7 }}
+							</a>
+							<span class="rubric">{{ result_post.category }}</span>
+							<span class="rubric">{{ result_post.date }}</span>
+							<span class="rubric">{{ result_post.author }}</span>
 						</li>
 					{% endfor %}
 				</ul>
 				<ul class="nav nav-pills nav-stacked blue">
-					{% for event in result_event %}
+					{% for result_event_item in result_event %}
 						<li>
-							<a class="button_category_posts" href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+							<a class="button_category_posts" href="{% url 'event' pk=result_event_item.pk %}">
+								{{ result_event_item.title }}
+							</a>
 							<span class="rubric">{% trans 'События' %}</span>
-							<span class="rubric">{{ event.ev_date }}</span>
-							<span class="rubric">{{ event.ev_place }}</span>
+							<span class="rubric">{{ result_event_item.ev_date }}</span>
+							<span class="rubric">{{ result_event_item.ev_place }}</span>
 						</li>
 					{% endfor %}
 				</ul>
 				<ul class="nav nav-pills nav-stacked blue">
-					{% for fact in result_fact %}
+					{% for result_fact_item in result_fact %}
 						<li>
-							<a class="button_category_posts" href="{% url 'fact' slug=fact.slug %}">{{ fact.title }}</a>
+							<a class="button_category_posts" href="{% url 'fact' pk=result_fact_item.pk %}">
+								{{ result_fact_item.title }}
+							</a>
 							<span class="rubric">{% trans 'Интересные факты' %}</span>
 							<span class="rubric">{{ event.content|truncatewords:20|safe }}</span>
 						</li>

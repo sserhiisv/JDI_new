@@ -16,12 +16,12 @@
 
 {% block loadfiles %}
 	{% compress css %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/fact.css" %}" />
-	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<link rel="stylesheet" type="text/css" href='{% static "css/fact.css" %}' />
+	<link rel="stylesheet" type="text/css" href='{% static "css/new-posts.css" %}' />
 	{% endcompress %}
 
 	{% compress js %}
-	<script src="{% static "js/new.js" %}"></script>
+	<script src='{% static "js/new.js" %}'></script>
 	{% endcompress %}
 {% endblock %}
 

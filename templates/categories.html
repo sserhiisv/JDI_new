@@ -4,20 +4,20 @@
     <ul class="nav nav-pills nav-stacked red">
         {% get_current_language as LANGUAGE_CODE %}
         {% ifequal LANGUAGE_CODE 'uk' %}
-            {% for category in categories %}
+            {% for category_item in categories %}
                 <li>
-                    <a class="categories" href="{% url 'category' slug=category.slug %}">
-                        <span class="{{ category.icon }}"></span>&nbsp;
-                        {{ category.name_ua }}
+                    <a class="categories" href="{% url 'category' pk=category_item.pk %}">
+                        <span class="{{ category_item.icon }}"></span>&nbsp;
+                        {{ category_item.name_ua }}
                     </a>
                 </li>
             {% endfor %}
         {% else %}
-            {% for category in categories %}
+            {% for category_item in categories %}
                 <li>
-                    <a class="categories" href="{% url 'category' slug=category.slug %}">
-                        <span class="{{ category.icon }}"></span>&nbsp;
-                        {{ category.name }}
+                    <a class="categories" href="{% url 'category' pk=category_item.pk %}">
+                        <span class="{{ category_item.icon }}"></span>&nbsp;
+                        {{ category_item.name }}
                     </a>
                 </li>
             {% endfor %}

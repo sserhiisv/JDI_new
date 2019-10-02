@@ -36,6 +36,9 @@ class Category(models.Model):
             self.slug = uuslug(self.name, instance=self)
         super(Category, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'slug': self.slug})
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=255)
@@ -52,6 +55,9 @@ class Tag(models.Model):
         if not self.id:
             self.slug = uuslug(self.title, instance=self)
         super(Tag, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('tag', kwargs={'slug': self.slug})
 
 
 class ReadPost(models.Model):
@@ -83,7 +89,7 @@ class ReadPost(models.Model):
         super(ReadPost, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'slug': self.slug})
+        return reverse('view_post', [self.slug], kwargs={'post_slug': self.slug})
 
 
 class Event(models.Model):
@@ -96,6 +102,9 @@ class Event(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to='images/events', verbose_name=u'Images')
     slug = models.SlugField('Slug')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='draft')
+    views = GenericRelation(HitCount,
+                            object_id_field='object_pk',
+                            related_query_name='hit_count_generic_relation')
 
     class Meta:
         verbose_name = 'Event'
@@ -111,7 +120,7 @@ class Event(models.Model):
         super(Event, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('event', kwargs={'slug': self.slug})
+        return reverse('event', kwargs={'event_slug': self.slug})
 
 
 class Fact(models.Model):
@@ -122,6 +131,9 @@ class Fact(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to='images/facts', verbose_name=u'Images')
     slug = models.SlugField('Slug')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='draft')
+    views = GenericRelation(HitCount,
+                            object_id_field='object_pk',
+                            related_query_name='hit_count_generic_relation')
 
     class Meta:
         verbose_name = 'Fact'

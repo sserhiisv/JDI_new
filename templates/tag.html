@@ -16,13 +16,13 @@
 
 {% block loadfiles %}
 	{% compress css %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/category-posts.css" %}" />
-	<link rel="stylesheet" type="text/css" href="{% static "css/tag.css" %}" />
-	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<link rel="stylesheet" type="text/css" href='{% static "css/category-posts.css" %}' />
+	<link rel="stylesheet" type="text/css" href='{% static "css/tag.css" %}' />
+	<link rel="stylesheet" type="text/css" href='{% static "css/new-posts.css" %}' />
 	{% endcompress %}
 
 	{% compress js %}
-	<script src="{% static "js/new.js" %}"></script>
+		<script src='{% static "js/new.js" %}'></script>
 	{% endcompress %}
 {% endblock %}
 
@@ -37,18 +37,22 @@
 	<div class="tag-inner">
 		{% trans 'Статьи по тегу' %}:<span id="tag-name"> {{ tag }}</span>
 	</div>
-	{% for post in posts %}
+	{% for tag_post in tag_posts %}
 		<div class="new-posts-inner">
-			{% thumbnail post.image "350" as im %}
+			{% thumbnail tag_post.image "350" as im %}
 				<div class="new-posts-img" style="background-image: url({{ im.url }});"></div>
 			{% endthumbnail %}
 			<div class="new-posts-about">
 				<div class="new-posts-about-title">
-					<a class="hidden-lg hidden-md" href="{% url 'post' slug=post.slug %}">{{ post.title|truncatewords:7 }}</a>
-					<a class="hidden-xs hidden-sm" href="{% url 'post' slug=post.slug %}">{{ post.title }}</a>
+					<a class="hidden-lg hidden-md" href="{{ tag_post.get_absolute_url }}">
+						{{ tag_post.title|truncatewords:7 }}
+					</a>
+					<a class="hidden-xs hidden-sm" href="{{ tag_post.get_absolute_url }}">
+						{{ tag_post.title }}
+					</a>
 				</div>
 				<div class="new-posts-about-desc hidden-sm hidden-xs">
-					{{ post.description|truncatewords:30|safe }}
+					{{ tag_post.description|truncatewords:30|safe }}
 				</div>
 			</div>
 		</div>

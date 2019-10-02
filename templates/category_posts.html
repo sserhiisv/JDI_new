@@ -26,12 +26,12 @@
 
 {% block loadfiles %}
 	{% compress css %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/category-posts.css" %}" />
-	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<link rel="stylesheet" type="text/css" href='{% static "css/category-posts.css" %}' />
+	<link rel="stylesheet" type="text/css" href='{% static "css/new-posts.css" %}' />
 	{% endcompress %}
 
 	{% compress js %}
-	<script src="{% static "js/new.js" %}"></script>
+	<script src='{% static "js/new.js" %}'></script>
 	{% endcompress %}
 {% endblock %}
 
@@ -46,18 +46,22 @@
 
 {% block category_posts %}
 	<div class="category-posts" style="padding: 30px;">
-		{% for post in cat_posts %}
+		{% for cat_post in cat_posts %}
 			<div class="new-posts-inner">
-				{% thumbnail post.image "500" as im %}
+				{% thumbnail cat_post.image "500" as im %}
 					<div class="new-posts-img" style="background-image: url({{ im.url }});"></div>
 				{% endthumbnail %}
 				<div class="new-posts-about">
 					<div class="new-posts-about-title">
-						<a class="hidden-lg hidden-md" href="{% url 'post' slug=post.slug %}">{{ post.title|truncatewords:7 }}</a>
-						<a class="hidden-xs hidden-sm" href="{% url 'post' slug=post.slug %}">{{ post.title }}</a>
+						<a class="hidden-lg hidden-md" href="{% url 'view_post' pk=cat_post.pk %}">
+							{{ cat_post.title|truncatewords:7 }}
+						</a>
+						<a class="hidden-xs hidden-sm" href="{% url 'view_post' pk=cat_post.pk %}">
+							{{ cat_post.title }}
+						</a>
 					</div>
 					<div class="new-posts-about-desc hidden-xs hidden-sm">
-						{{ post.description|safe|truncatewords:30 }}
+						{{ cat_post.description|safe|truncatewords:30 }}
 					</div>
 				</div>
 			</div>

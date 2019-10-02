@@ -7,7 +7,7 @@
 			<span>{% trans 'Новые события' %}</span>
 		</div>
 		{% for new_event in new_events %}
-			<a href="{% url 'event' slug=new_event.slug %}">
+			<a href="{% url 'event' pk=new_event.pk %}">
 				<div class="new-events-inner">
 					{% thumbnail new_event.image "200" as im %}
 						<div class="new-events-img" style="background-image: url({{ im.url }});"></div>
@@ -26,7 +26,7 @@
 			<span>{% trans 'Новые факты' %}</span>
 		</div>
 		{% for new_fact in new_facts %}
-			<a href="{% url 'fact' slug=new_fact.slug %}">
+			<a href="{% url 'fact' pk=new_fact.pk %}">
 				<div class="new-facts-inner">
 					{% thumbnail new_fact.image "200" as im %}
 						<div class="new-facts-img" style="background-image: url({{ im.url }});"></div>

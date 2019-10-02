@@ -10,7 +10,7 @@ from webapp.models import ReadPost, Category, Event, Fact, Tag
 class PostAdmin(admin.ModelAdmin):
     fields = ['title', 'author', 'tag', 'category', 'description', 'content', 'date', 'image']
     list_display = ['title', 'photo_thumbnail', 'slug', 'status', 'category', 'date']
-    list_filter = ['date', 'title', 'category', 'status', 'views']
+    list_filter = ['date', 'title', 'category', 'status']
     search_fields = ['title', 'status', 'date', 'category', 'author']
     actions = ['make_published']
 

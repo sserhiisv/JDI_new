@@ -17,11 +17,11 @@
 
 {% block loadfiles %}
 	{% compress css %}
-	<link rel="stylesheet" type="text/css" href="{% static "css/new-posts.css" %}" />
+	<link rel="stylesheet" type="text/css" href='{% static "css/new-posts.css" %}' />
 	{% endcompress %}
 
 	{% compress js %}
-	<script src="{% static "js/new.js" %}"></script>
+	<script src='{% static "js/new.js" %}'></script>
 	{% endcompress %}
 {% endblock %}
 
@@ -45,8 +45,12 @@
 				{% endthumbnail %}
 				<div class="new-posts-about">
 					<div class="new-posts-about-title">
-						<a class="hidden-lg hidden-md" href="{% url 'post' slug=new_post.slug %}">{{ new_post.title|truncatewords:7 }}</a>
-						<a class="hidden-xs hidden-sm" href="{% url 'post' slug=new_post.slug %}">{{ new_post.title }}</a>
+						<a class="hidden-lg hidden-md" href="{% url 'view_post' pk=new_post.pk %}">
+							{{ new_post.title|truncatewords:7 }}
+						</a>
+						<a class="hidden-xs hidden-sm" href="{% url 'view_post' pk=new_post.pk %}">
+							{{ new_post.title }}
+						</a>
 					</div>
 					<div class="new-posts-about-desc hidden-xs hidden-sm">
 						<p class="new-post-date">{{ new_post.date }}</p>

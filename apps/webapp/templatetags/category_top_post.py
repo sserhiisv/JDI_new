@@ -13,4 +13,4 @@ def get_category_top():
         posts.append(
             ReadPost.objects.filter(status='published').filter(category__name=category).order_by('views').first()
         )
-    return {'posts': posts}
+    return {'most_pop_cat_posts': posts}

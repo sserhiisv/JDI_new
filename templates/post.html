@@ -11,7 +11,7 @@
 
 {% block meta_desc %}
 	<meta name="keywords" content="{% for tag in post.tag.all %}{{ tag }} | {% endfor %}">
-    <meta name="description" content="{{ post.description }}">
+    <meta name="description" content="{{ read_post.description }}">
 {% endblock %}
 
 {% block loadfiles %}
@@ -63,7 +63,7 @@
 	<div class="post-tags">
 		<span>Теги:</span>
 		{% for tag in read_post.tag.all %}
-			<a href="{% url 'tag' slug=tag.slug %}">
+			<a href="{% url 'tag' pk=tag.pk %}">
 				<span class="label label-primary">{{ tag }}</span>
 			</a>
 		{% endfor %}
@@ -80,7 +80,7 @@
 		</div>
 		<div class="post-similar-set">
 			{% for post_similar in similar %}
-				<a href="{% url 'post' slug=post_similar.slug %}">
+				<a href="{% url 'view_post' pk=post_similar.pk %}">
 					<div class="post-similar-block">
 						<div class="post-similar-img" style="background-image: url({{ post_similar.image.url }});"></div>
 						<div class="post-similar-title">

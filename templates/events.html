@@ -26,24 +26,24 @@
 
 {% block events %}
 	<div class="events-list" style="padding: 30px;">
-		{% for event in events %}
+		{% for event_item in events %}
 			<div class="event-block">
 				{% thumbnail event.image "300" as im %}
-					<a href="{% url 'event' slug=event.slug %}">
+					<a href="{% url 'event' pk=event_item.pk %}">
 						<div class="event-block-img" style="background-image: url({{ im.url }});"></div>
 					</a>
 				{% endthumbnail %}
 				<div class="event-block-about">
 					<div class="event-block-about-title">
-						<a href="{% url 'event' slug=event.slug %}">{{ event.title }}</a>
+						<a href="{% url 'event' pk=event_item.pk %}">{{ event_item.title }}</a>
 					</div>
 					<div class="event-block-about-date-place hidden-sm hidden-xs">
 						<span>
-							{{ event.ev_date }} | {{ event.ev_place }}
+							{{ event_item.ev_date }} | {{ event_item.ev_place }}
 						</span>
 					</div>
 					<div class="event-block-about-desc hidden-xs hidden-sm">
-						{{ event.content|safe|truncatewords:20 }}
+						{{ event_item.content|safe|truncatewords:20 }}
 					</div>
 				</div>
 			</div>

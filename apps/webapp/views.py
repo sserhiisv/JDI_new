@@ -62,8 +62,8 @@ class CategoryPosts(ListView):
         context = super(CategoryPosts, self).get_context_data(**kwargs)
         context['cat_posts'] = ReadPost.objects.filter(status='published') \
                                            .filter(date__lte=datetime.now()) \
-                                           .filter(category__slug=self.kwargs.get('slug'))
-        context['category'] = Category.objects.get(slug=self.kwargs.get('slug'))
+                                           .filter(category__pk=self.kwargs.get('pk'))
+        context['category'] = Category.objects.get(pk=self.kwargs.get('pk'))
         return context
 
 
@@ -74,11 +74,10 @@ class ViewPost(HitCountDetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewPost, self).get_context_data(**kwargs)
-        r_post = ReadPost.objects.get(slug=self.kwargs['slug'])
+        r_post = ReadPost.objects.get(pk=self.kwargs['pk'])
         context['read_post'] = r_post
         context['similar'] = ReadPost.objects.filter(date__lte=datetime.now()) \
                                          .filter(category=r_post.category) \
-                                         .filter(~Q(slug=self.kwargs['slug'])) \
                                          .order_by('?')[:3]
         return context
 
@@ -96,7 +95,7 @@ class ViewEvent(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewEvent, self).get_context_data(**kwargs)
-        context['event'] = Event.objects.get(slug=self.kwargs['slug'])
+        context['event'] = Event.objects.get(pk=self.kwargs['pk'])
         return context
 
 
@@ -113,7 +112,7 @@ class ViewFact(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewFact, self).get_context_data(**kwargs)
-        context['fact'] = Fact.objects.get(slug=self.kwargs['slug'])
+        context['fact'] = Fact.objects.get(pk=self.kwargs['pk'])
         return context
 
 
@@ -127,9 +126,8 @@ class TagPosts(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TagPosts, self).get_context_data(**kwargs)
-        context['posts'] = ReadPost.objects.filter(date__lte=datetime.now()) \
-                                       .filter(tag__slug=self.kwargs['slug'])
-        context['tag'] = Tag.objects.get(slug=self.kwargs['slug'])
+        context['tag_posts'] = ReadPost.objects.filter(date__lte=datetime.now())
+        context['tag'] = Tag.objects.get(pk=self.kwargs['pk'])
         return context
 
 

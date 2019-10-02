@@ -20,5 +20,6 @@ urlpatterns += i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^hitcount/', include('hitcount.urls', namespace='hitcount')),
     url(r'^', include('webapp.urls')),
 )

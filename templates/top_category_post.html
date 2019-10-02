@@ -3,24 +3,28 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 <div class="top-category">
-    {% for post in posts %}
+    {% for most_pop_cat_post in most_pop_cat_posts %}
         <div class="media">
             <div class="media-left hidden-xs hidden-sm">
-                <a href="{% url 'post' slug=post.slug %}">
-                    {% thumbnail post.image "100" as im %}
+                <a href="{% url 'view_post' pk=most_pop_cat_post.pk %}">
+                    {% thumbnail most_pop_cat_post.image "100" as im %}
                         <img class="media-object top-category-img" src="{{ im.url }}" alt="...">
                     {% endthumbnail %}
                 </a>
             </div>
             <div class="media-body">
-                <a href="{% url 'post' slug=post.slug %}" title="{{ post.title }}">
-                    <h4 class="media-heading hidden-xs hidden-sm">{{ post.title|truncatewords:5 }}</h4>
-                    <h4 class="media-heading hidden-md hidden-lg">{{ post.title|truncatewords:10 }}</h4>
+                <a href="{% url 'view_post' pk=most_pop_cat_post.pk %}" title="{{ most_pop_cat_post.title }}">
+                    <h4 class="media-heading hidden-xs hidden-sm">
+                        {{ most_pop_cat_post.title|truncatewords:5 }}
+                    </h4>
+                    <h4 class="media-heading hidden-md hidden-lg">
+                        {{ most_pop_cat_post.title|truncatewords:10 }}
+                    </h4>
                 </a>
                 {% ifequal LANGUAGE_CODE 'uk' %}
-                    <span class="media-body-cat">{{ post.category.name_ua }}</span>
+                    <span class="media-body-cat">{{ most_pop_cat_post.category.name_ua }}</span>
                 {% else %}
-                    <span class="media-body-cat">{{ post.category }}</span>
+                    <span class="media-body-cat">{{ most_pop_cat_post.category }}</span>
                 {% endifequal %}
             </div>
         </div>
